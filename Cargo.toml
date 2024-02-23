@@ -8,6 +8,10 @@ edition = "2021"
 name = "clean_arch_test"
 path = "src/main.rs"
 
+[lib]
+name = "test_api"
+path = "src/lib.rs"
+
 [dependencies]
 actix-web = { version = "3", features = ["openssl"] }
 actix-rt = "~2.7"
