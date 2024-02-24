@@ -1,0 +1,1 @@
+pub mod dog_facts_repository_abstract;
