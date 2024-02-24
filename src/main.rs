@@ -4,6 +4,8 @@ use std::net::TcpListener;
 
 use test_api::run;
 
+mod constants;
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     dotenvy::dotenv().ok();
@@ -14,7 +16,7 @@ async fn main() -> std::io::Result<()> {
 
     dotenvy::from_filename(".env.".to_string() + &environment).ok();
 
-    let listener = TcpListener::bind("0.0.0.0:8888").expect("Failed to bind random port");
+    let listener = TcpListener::bind(constants::BIND).expect("Failed to bind random port");
     let database_name = env::var("DATABASE_NAME").expect("DATABASE_NAME must be set");
 
     run(listener, &database_name)?.await
