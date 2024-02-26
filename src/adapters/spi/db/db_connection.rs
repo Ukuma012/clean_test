@@ -2,6 +2,7 @@ use diesel::{pg::PgConnection, r2d2::ConnectionManager};
 
 type DbPool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
+#[derive(Clone)]
 pub struct DbConnection {
     pub db_name: String,
 }

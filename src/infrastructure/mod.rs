@@ -3,10 +3,7 @@ use std::{env, net::TcpListener};
 use crate::adapters::{
     self,
     api::shared::app_state::AppState,
-    spi::{
-        db::{db_connection::DbConnection, db_dog_facts_repository::DogFactsRepository},
-        http::http_connection::HttpConnection,
-    },
+    spi::db::{db_connection::DbConnection, db_dog_facts_repository::DogFactsRepository, db_invitation_repository::InvitationRepository},
 };
 
 use actix_web::{dev::Server, middleware::Logger};
@@ -19,11 +16,15 @@ pub fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Er
     env_logger::init();
 
     let db_connection = DbConnection { db_name: db_name.to_string() };
-    // let http_connection = HttpConnection {};
 
     let data = web::Data::new(AppState {
         app_name: String::from("Clean Architecture Test"),
-        dogs_repository: DogFactsRepository { db_connection },
+        dogs_repository: DogFactsRepository {
+            db_connection: db_connection.clone(),
+        },
+        invitation_repository: InvitationRepository {
+            db_connection: db_connection.clone(),
+        },
     });
 
     let port = listner.local_addr().unwrap().port();
