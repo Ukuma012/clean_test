@@ -5,3 +5,8 @@ use async_trait::async_trait;
 pub trait AbstractUseCase<T> {
     async fn execute(&self) -> Result<T, ApiError>;
 }
+
+#[async_trait(?Send)]
+pub trait AbstractInvitationUseCase<T> {
+    async fn insert_invitation(&self) -> Result<T, ApiError>;
+}

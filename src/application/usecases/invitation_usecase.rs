@@ -1,7 +1,7 @@
 use async_trait::async_trait;
 
 use crate::application::{
-    repositories::invitation_repository_abstract::InvitationRepositoryAbstract, usecases::interfaces::AbstractUseCase, utils::error_handling_utils::ErrorHandlingUtils,
+    repositories::invitation_repository_abstract::InvitationRepositoryAbstract, usecases::interfaces::AbstractInvitationUseCase, utils::error_handling_utils::ErrorHandlingUtils,
 };
 use crate::domain::{error::ApiError, invitation_entity::InvitationEntity};
 
@@ -17,8 +17,8 @@ impl<'a> InvitationUseCase<'a> {
 }
 
 #[async_trait(?Send)]
-impl<'a> AbstractUseCase<InvitationEntity> for InvitationUseCase<'a> {
-    async fn execute(&self) -> Result<InvitationEntity, ApiError> {
+impl<'a> AbstractInvitationUseCase<InvitationEntity> for InvitationUseCase<'a> {
+    async fn insert_invitation(&self) -> Result<InvitationEntity, ApiError> {
         let invitation = self.repository.post_invitation(self.email.to_string()).await;
 
         match invitation {
