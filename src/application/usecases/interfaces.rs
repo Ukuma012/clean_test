@@ -8,5 +8,5 @@ pub trait AbstractUseCase<T> {
 
 #[async_trait(?Send)]
 pub trait AbstractInvitationUseCase<T> {
-    async fn insert_invitation(&self) -> Result<T, ApiError>;
+    async fn post_invitation(&self) -> Result<T, ApiError>;
 }

@@ -18,7 +18,7 @@ impl<'a> InvitationUseCase<'a> {
 
 #[async_trait(?Send)]
 impl<'a> AbstractInvitationUseCase<InvitationEntity> for InvitationUseCase<'a> {
-    async fn insert_invitation(&self) -> Result<InvitationEntity, ApiError> {
+    async fn post_invitation(&self) -> Result<InvitationEntity, ApiError> {
         let invitation = self.repository.post_invitation(self.email.to_string()).await;
 
         match invitation {

@@ -1,6 +1,7 @@
 use chrono::NaiveDateTime;
+use serde::Serialize;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct InvitationEntity {
     pub invitation_token: uuid::Uuid,
     pub email: String,
