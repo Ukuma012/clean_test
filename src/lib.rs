@@ -13,5 +13,5 @@ extern crate diesel;
 extern crate r2d2;
 
 pub fn run(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Error> {
-    infrastructure::server(listner, db_name)
+    infrastructure::server::server(listner, db_name)
 }

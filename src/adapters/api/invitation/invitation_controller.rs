@@ -12,7 +12,7 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
 
 #[post("/")]
 async fn post_invitation(data: web::Data<AppState>, form: web::Json<invitation_payloads::Invitation>) -> Result<HttpResponse, ErrorResponse> {
-    let invitation_usecase = InvitationUseCase::new(&form.email, &data.invitation_repository);
+    let invitation_usecase = InvitationUseCase::new(&form.email, &data.invitation_repository, &data.email_repository);
     let invitation = invitation_usecase.post_invitation().await;
 
     invitation

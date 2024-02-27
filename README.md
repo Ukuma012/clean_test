@@ -14,3 +14,7 @@
   他にやり方を思いつかないので、practical にやっていく
 
 - error response を変更する。ApiResponse の方がわかりやすい
+
+# 発見
+
+- この実装では、外部(db, http, email service)とのやりとりは adapters の api と spi で行なっている
