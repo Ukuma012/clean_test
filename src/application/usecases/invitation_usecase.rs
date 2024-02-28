@@ -1,3 +1,16 @@
+/**
+* エンドポイント /api/v1/register/invitation
+* HTTPメソッド POST
+* リクエストボディ
+   パラメータ名： email
+   データ型： String
+   説明： 招待リンクを送るメールアドレス
+   必須か： 必須
+* レスポンス
+   ステータスコード
+       200 OK: リクエストは成功し、DBにinvitation_token, expires_at, usedが挿入され、invitation_token付きのリンクが記載された本登録リンクが送信される。
+       400: invitation_tokenが挿入できなかったか、メールが送信できなかった
+*/
 use async_trait::async_trait;
 
 use crate::application::{
