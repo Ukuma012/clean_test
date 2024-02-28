@@ -5,5 +5,5 @@ use std::error::Error;
 
 #[async_trait(?Send)]
 pub trait InvitationRepositoryAbstract {
-    async fn post_invitation(&self, email: String) -> Result<InvitationEntity, Box<dyn Error>>;
+    async fn insert_invitation(&self, email: String) -> Result<InvitationEntity, Box<dyn Error>>;
 }

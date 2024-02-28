@@ -8,7 +8,7 @@ use crate::application::repositories::email_repository_abstract::EmailRepository
 pub struct MailTrapRepository {}
 
 impl EmailRepositoryAbstract for MailTrapRepository {
-    fn send_email(&self, recipient: &str, subject: &str, body: &str) -> Result<(), Box<dyn Error>> {
+    fn send_email(&self, recipient: &str, subject: &str, body: String) -> Result<(), Box<dyn Error>> {
         let email = Message::builder()
             .from("Keyaki Capital <keyaki@test.com>".parse().unwrap())
             .to(recipient.parse().unwrap())

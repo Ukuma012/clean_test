@@ -25,16 +25,27 @@ impl<'a> InvitationUseCase<'a> {
 #[async_trait(?Send)]
 impl<'a> AbstractInvitationUseCase<InvitationEntity> for InvitationUseCase<'a> {
     async fn post_invitation(&self) -> Result<InvitationEntity, ApiError> {
-        let invitation = self.invitation_repository.post_invitation(self.email.to_string()).await;
-
-        let recipient = "test@hardcode.com";
-        let subject = "hardcode subject";
-        let body = "This is hardcoded text";
-
-        let _send_email = self.email_repository.send_email(recipient, subject, body);
+        let invitation = self.invitation_repository.insert_invitation(self.email.to_string()).await;
 
         match invitation {
-            Ok(invitation) => Ok(invitation),
+            Ok(invitation) => {
+                let recipient = &invitation.email;
+                let subject = "invitation link";
+                let body = format!(
+                    "Please click on the link below to complete registration. <br/>
+                        <a href=\"http://localhost:7878/api/users/complete/{}\">
+                        http://localhost:7878/api/users/complete/</a><br/>
+                        your invitation expires on <strong>{}</strong>",
+                    invitation.invitation_token,
+                    invitation.expires_at.format("%I:%M %p %A, %-d %B, %C%y").to_string()
+                );
+
+                let send_email = self.email_repository.send_email(recipient, subject, body);
+                match send_email {
+                    Ok(_) => Ok(invitation),
+                    Err(e) => Err(ErrorHandlingUtils::application_error("Cannot send email", Some(e))),
+                }
+            }
             Err(e) => Err(ErrorHandlingUtils::application_error("Cannot insert invitation", Some(e))),
         }
     }

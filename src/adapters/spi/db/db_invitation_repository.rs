@@ -14,7 +14,7 @@ pub struct InvitationRepository {
 
 #[async_trait(?Send)]
 impl InvitationRepositoryAbstract for InvitationRepository {
-    async fn post_invitation(&self, user_email: String) -> Result<InvitationEntity, Box<dyn Error>> {
+    async fn insert_invitation(&self, user_email: String) -> Result<InvitationEntity, Box<dyn Error>> {
         let conn = self.db_connection.get_pool().get().expect("couldn't get db connection from pool");
 
         let new_invitation: Invitation = user_email.into();
