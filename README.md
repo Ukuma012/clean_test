@@ -26,6 +26,8 @@
 - uuid や chrono を使わないと、invitations の entity を表現できないけれど、外部のパッケージに依存することになる？
   他にやり方を思いつかないので、practical にやっていく
 
+# TODO
+
 - error response を変更する。ApiResponse の方がわかりやすい
 
 # 発見
