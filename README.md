@@ -29,6 +29,7 @@
 # TODO
 
 - error response を変更する。ApiResponse の方がわかりやすい
+- 独自のエラー定義(domain)とエラーハンドリング(utils)を行なっている。これを common/error に集約する
 
 # 発見
 
