@@ -3,6 +3,7 @@ use std::net::TcpListener;
 
 pub mod adapters;
 pub mod application;
+pub mod common;
 pub mod domain;
 pub mod infrastructure;
 
