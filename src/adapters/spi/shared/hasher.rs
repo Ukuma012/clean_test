@@ -1,5 +1,5 @@
 use crate::error::AppError;
-use argon2::password_hash::{self, SaltString};
+use argon2::password_hash::SaltString;
 use argon2::{Algorithm, Argon2, Params, PasswordHash, PasswordHasher, PasswordVerifier, Version};
 
 fn compute_password_hash(password: String) -> Result<String, AppError> {
