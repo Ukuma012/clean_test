@@ -3,8 +3,8 @@ use std::net::TcpListener;
 
 pub mod adapters;
 pub mod application;
-pub mod common;
 pub mod domain;
+pub mod error;
 pub mod infrastructure;
 
 extern crate log;
