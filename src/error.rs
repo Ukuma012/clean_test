@@ -1,4 +1,5 @@
 use actix_web::{error::ResponseError, http::StatusCode, HttpResponse};
+use argon2::Error as Argon2Error;
 use diesel::r2d2::{Error as R2D2Error, PoolError};
 use diesel::result::{DatabaseErrorKind, Error as DieselError};
 use serde_json::json;
@@ -89,5 +90,12 @@ impl From<DieselError> for AppError {
 impl From<UuidError> for AppError {
     fn from(_err: UuidError) -> Self {
         AppError::NotFound(json!({"error":"Uuid is invalid."}))
+    }
+}
+
+impl From<Argon2Error> for AppError {
+    fn from(_err: Argon2Error) -> Self {
+        // Errorを一つずつ列挙すること
+        AppError::BadRequest(json!({"error":"Argon2 Error."}))
     }
 }

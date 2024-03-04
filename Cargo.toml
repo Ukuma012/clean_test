@@ -39,6 +39,7 @@ dotenvy = "0.15.7"
 chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "0.8.2", features = ["serde", "v4"] }
 lettre = "0.11.3"
+argon2 = "0.5.3"
 
 [dev-dependencies]
 cargo-tarpaulin = "~0.20"
