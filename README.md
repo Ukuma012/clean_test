@@ -25,12 +25,11 @@
 
 - uuid や chrono を使わないと、invitations の entity を表現できないけれど、外部のパッケージに依存することになる？
   他にやり方を思いつかないので、practical にやっていく
-
-# TODO
-
 - error response を変更する。domain にエラー定義をし、Box<dyn Error>で
 - 独自のエラー定義(domain)とエラーハンドリング(utils)を行なっている。これを common/error に集約する.
 - argon2 のエラーを列挙するかどうか
+- infrastructure 層と adapter 層が分離されていない。adapter 層が実質 infrastructure 層を担っている。infrastructure 層が意味をなしていない。
+- register complete の時は、エンティティは User?それとも RegisterCompleteUser?
 
 # 発見
 

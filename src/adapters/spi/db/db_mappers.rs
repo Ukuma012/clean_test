@@ -1,8 +1,11 @@
 use crate::adapters::spi::db::models::DogFact;
 use crate::adapters::spi::db::models::Invitation;
+use crate::adapters::spi::db::models::User;
 use crate::application::mappers::db_mapper::DbMapper;
 use crate::domain::dog_fact_entity::DogFactEntity;
 use crate::domain::invitation_entity::InvitationEntity;
+use crate::domain::user_entity::UserEntity;
+use uuid::Uuid;
 
 pub struct DogFactDbMapper {}
 
@@ -40,6 +43,27 @@ impl DbMapper<InvitationEntity, Invitation> for InvitationDbMapper {
             email: model.email,
             used: model.used,
             expires_at: model.expires_at,
+        }
+    }
+}
+
+pub struct RegisterCompleteDbMapper {}
+
+impl DbMapper<UserEntity, User> for RegisterCompleteDbMapper {
+    fn to_db(entity: UserEntity) -> User {
+        User {
+            id: Uuid::new_v4(),
+            email: entity.email,
+            password: entity.password,
+            created_at: chrono::Local::now().naive_local(),
+            updated_at: chrono::Local::now().naive_local(),
+        }
+    }
+
+    fn to_entity(model: User) -> UserEntity {
+        UserEntity {
+            email: model.email,
+            password: model.password,
         }
     }
 }

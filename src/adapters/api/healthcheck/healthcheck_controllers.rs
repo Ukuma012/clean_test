@@ -6,5 +6,5 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
 
 #[get("/")]
 async fn healthcheck() -> impl Responder {
-    HttpResponse::Ok().body("OK\n")
+    HttpResponse::Ok().body("Ok\n")
 }

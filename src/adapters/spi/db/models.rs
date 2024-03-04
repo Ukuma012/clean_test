@@ -32,3 +32,13 @@ where
         }
     }
 }
+
+#[derive(Queryable, Insertable)]
+#[table_name = "users"]
+pub struct User {
+    pub id: uuid::Uuid,
+    pub email: String,
+    pub password: String,
+    pub created_at: NaiveDateTime,
+    pub updated_at: NaiveDateTime,
+}
