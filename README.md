@@ -10,7 +10,9 @@
 
 ## complete registration
 
-- curl --request POST --url http://localhost:8787/api/v1/register/complete/52d4c5e1-04ac-4f58-ab6e-e47c4ac475cc --header 'content-type: application/json' --data '{"user": {"email":"name@domain.com", "password":"password"}}'
+- curl -X POST http://localhost:8787/api/v1/register/complete/c5e01578-1f2b-4260-b250-e9e5abaa492b \
+  --header 'content-type: application/json' \
+  --data '{"email":"name@domain.com", "password":"password"}'
 
 # API 仕様に書くべきこと
 

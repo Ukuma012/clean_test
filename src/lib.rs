@@ -5,6 +5,7 @@ pub mod adapters;
 pub mod application;
 pub mod domain;
 pub mod error;
+pub mod error_response;
 pub mod infrastructure;
 
 extern crate log;

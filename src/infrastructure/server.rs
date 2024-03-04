@@ -3,8 +3,13 @@ use std::{env, net::TcpListener};
 use crate::adapters::{
     self,
     api::shared::app_state::AppState,
-    spi::db::{db_connection::DbConnection, db_dog_facts_repository::DogFactsRepository, db_invitation_repository::InvitationRepository},
-    spi::email::email_repository::MailTrapRepository,
+    spi::{
+        db::{
+            db_connection::DbConnection, db_dog_facts_repository::DogFactsRepository, db_invitation_repository::InvitationRepository,
+            db_register_complete_repository::RegisterCompleteRepository,
+        },
+        email::email_repository::MailTrapRepository,
+    },
 };
 
 use actix_web::{dev::Server, middleware::Logger};
@@ -24,6 +29,9 @@ pub fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Er
             db_connection: db_connection.clone(),
         },
         invitation_repository: InvitationRepository {
+            db_connection: db_connection.clone(),
+        },
+        register_complete_repository: RegisterCompleteRepository {
             db_connection: db_connection.clone(),
         },
         email_repository: MailTrapRepository {},
