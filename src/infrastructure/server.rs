@@ -9,14 +9,12 @@ use crate::adapters::{
             db_register_complete_repository::RegisterCompleteRepository,
         },
         email::email_repository::MailTrapRepository,
+        redis::redis_connection::RedisConnection,
     },
 };
 
-use actix_redis::RedisSession;
 use actix_web::{dev::Server, middleware::Logger};
 use actix_web::{web, App, HttpServer};
-use rand::prelude::*;
-use rand_chacha::ChaCha20Rng;
 
 pub fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Error> {
     env::set_var("RUST_BACKTRACE", "1");
@@ -40,18 +38,15 @@ pub fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Er
         email_repository: MailTrapRepository {},
     });
 
-    let redis_url = env::var("REDIS_URL").expect("REDIS_URL must be set");
-    let mut csp_rng = ChaCha20Rng::from_entropy();
-    let mut redis_data = [0u8; 32];
-    csp_rng.fill_bytes(&mut redis_data);
-
     let port = listner.local_addr().unwrap().port();
 
     let server = HttpServer::new(move || {
+        let session = RedisConnection::new();
+
         App::new()
             .app_data(data.clone())
             .wrap(Logger::default())
-            .wrap(RedisSession::new(&redis_url, &redis_data))
+            .wrap(session.clone())
             .configure(adapters::api::shared::routes::routes)
     })
     .listen(listner)?
