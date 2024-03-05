@@ -12,12 +12,15 @@ use crate::adapters::{
     },
 };
 
+use actix_redis::RedisSession;
 use actix_web::{dev::Server, middleware::Logger};
 use actix_web::{web, App, HttpServer};
+use rand::prelude::*;
+use rand_chacha::ChaCha20Rng;
 
 pub fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Error> {
     env::set_var("RUST_BACKTRACE", "1");
-    env::set_var("RUST_LOG", "actix_web=debug");
+    env::set_var("RUST_LOG", "actix_web=debug,actix_redis=info");
 
     env_logger::init();
 
@@ -37,11 +40,22 @@ pub fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Er
         email_repository: MailTrapRepository {},
     });
 
+    let redis_url = env::var("REDIS_URL").expect("REDIS_URL must be set");
+    let mut csp_rng = ChaCha20Rng::from_entropy();
+    let mut redis_data = [0u8; 32];
+    csp_rng.fill_bytes(&mut redis_data);
+
     let port = listner.local_addr().unwrap().port();
 
-    let server = HttpServer::new(move || App::new().app_data(data.clone()).wrap(Logger::default()).configure(adapters::api::shared::routes::routes))
-        .listen(listner)?
-        .run();
+    let server = HttpServer::new(move || {
+        App::new()
+            .app_data(data.clone())
+            .wrap(Logger::default())
+            .wrap(RedisSession::new(&redis_url, &redis_data))
+            .configure(adapters::api::shared::routes::routes)
+    })
+    .listen(listner)?
+    .run();
 
     println!("Server running on port {}, db_name {}", port, db_name);
 
