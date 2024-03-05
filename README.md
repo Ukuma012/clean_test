@@ -4,6 +4,10 @@
 
 - curl -X GET http://localhost:8787/api/v1/healthcheck/
 
+- curl -v -X POST http://localhost:8787/api/v1/healthcheck/login
+
+- curl -v -X POST http://localhost:8787/api/v1/healthcheck/add --cookie actix-session=dXY6NUEOzihwDj06aSjNdkezeMlU91JKSZdakMx0J6Q=YHRwDwTybv3jKF2y9PqTmDAdaiuRaLNU
+
 ## invitation token
 
 - curl -X POST http://localhost:8787/api/v1/register/invitation/ --header 'content-type: application/json' --data '{"email":"name@domain.com"}'
