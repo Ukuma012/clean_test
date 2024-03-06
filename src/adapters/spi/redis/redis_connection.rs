@@ -1,4 +1,5 @@
 use actix_redis::RedisSession;
+use actix_session::CookieSession;
 use rand::prelude::*;
 use rand_chacha::ChaCha20Rng;
 use std::sync::Arc;

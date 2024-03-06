@@ -39,6 +39,8 @@
 
 # TODO
 
+- 現状は actix-session::Session を利用している。これは Cookie Session になってしまう。
+
 # 発見
 
 - この実装では、外部(db, http, email service)とのやりとりは adapters の api と spi で行なっている

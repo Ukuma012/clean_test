@@ -13,6 +13,7 @@ use crate::adapters::{
     },
 };
 
+use actix_session::CookieSession;
 use actix_web::{dev::Server, middleware::Logger};
 use actix_web::{web, App, HttpServer};
 
@@ -39,14 +40,13 @@ pub fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Er
     });
 
     let port = listner.local_addr().unwrap().port();
+    let session = RedisConnection::new();
 
     let server = HttpServer::new(move || {
-        let session = RedisConnection::new();
-
         App::new()
             .app_data(data.clone())
             .wrap(Logger::default())
-            .wrap(session.clone())
+            .wrap(CookieSession::signed(&[0; 32]).secure(false))
             .configure(adapters::api::shared::routes::routes)
     })
     .listen(listner)?
