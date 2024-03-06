@@ -39,9 +39,6 @@
 
 # TODO
 
-- session を引数として追加する
-- 認証成功時に session 発行
-
 # 発見
 
 - この実装では、外部(db, http, email service)とのやりとりは adapters の api と spi で行なっている
