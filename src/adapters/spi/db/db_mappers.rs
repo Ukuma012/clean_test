@@ -64,7 +64,6 @@ impl DbMapper<UserEntity, User> for RegisterCompleteDbMapper {
         UserEntity {
             email: model.email,
             password: model.password,
-            session_id: None,
         }
     }
 }

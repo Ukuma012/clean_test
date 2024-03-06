@@ -1,4 +1,4 @@
-use actix_web::{error::ResponseError, http::StatusCode, HttpResponse};
+use actix_web::{error::ResponseError, http::StatusCode, Error, HttpResponse};
 use argon2::password_hash::Error as PasswordHashError;
 use diesel::r2d2::{Error as R2D2Error, PoolError};
 use diesel::result::{DatabaseErrorKind, Error as DieselError};
@@ -95,8 +95,12 @@ impl From<UuidError> for AppError {
 
 impl From<PasswordHashError> for AppError {
     fn from(_err: PasswordHashError) -> Self {
-        // password_hash::errors::Error
-        // Errorを一つずつ列挙する?
         AppError::BadRequest(json!({"error":"Argon2 Error."}))
+    }
+}
+
+impl From<Error> for AppError {
+    fn from(_err: Error) -> Self {
+        AppError::InternalServerError
     }
 }

@@ -10,11 +10,11 @@
 
 ## invitation token
 
-- curl -X POST http://localhost:8787/api/v1/register/invitation/ --header 'content-type: application/json' --data '{"email":"name@domain.com"}'
+- curl -X POST -v http://localhost:8787/api/v1/register/invitation/ --header 'content-type: application/json' --data '{"email":"name@domain.com"}'
 
 ## complete registration
 
-- curl -X POST http://localhost:8787/api/v1/register/complete/c5e01578-1f2b-4260-b250-e9e5abaa492b \
+- curl -X POST -v http://localhost:8787/api/v1/register/complete/c5e01578-1f2b-4260-b250-e9e5abaa492b \
   --header 'content-type: application/json' \
   --data '{"email":"name@domain.com", "password":"password"}'
 

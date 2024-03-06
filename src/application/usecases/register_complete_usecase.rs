@@ -81,10 +81,6 @@ impl<'a> AbstractRegisterCompleteUseCase<UserEntity> for RegisterCompleteUseCase
             // emailとpasswordを保存
             let insertd_user = self.register_complete_repository.insert_user(self.email.to_string(), self.password.to_string()).await?;
 
-            // sessionIDの発行
-
-            // let auth_user = self.register_complete_repository.generate_session_id(insertd_user).await?;
-            // UserPresenterでsession IDを設定し、to_apiで詰め替える
             Ok(insertd_user)
         }
     }
