@@ -39,6 +39,7 @@
 
 # TODO
 
+- session を引数として追加する
 - 認証成功時に session 発行
 
 # 発見

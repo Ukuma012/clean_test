@@ -1,5 +1,6 @@
 use async_trait::async_trait;
 use diesel::prelude::*;
+use uuid::Uuid;
 
 use crate::application::mappers::db_mapper::DbMapper;
 use crate::application::repositories::register_complete_repository_abstract::RegisterCompleteRepositoryAbstract;
@@ -29,5 +30,10 @@ impl RegisterCompleteRepositoryAbstract for RegisterCompleteRepository {
         let result = diesel::insert_into(users::table).values(&db_new_user).get_result::<User>(&conn)?;
 
         Ok(RegisterCompleteDbMapper::to_entity(result))
+    }
+
+    async fn generate_session_id(&self, user: UserEntity) -> Result<UserEntity, AppError> {
+        unimplemented!()
+        // let session_id = Uuid::new_v4();
     }
 }
