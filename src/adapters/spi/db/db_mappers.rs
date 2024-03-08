@@ -67,3 +67,24 @@ impl DbMapper<UserEntity, User> for RegisterCompleteDbMapper {
         }
     }
 }
+
+pub struct LoginDbMapper {}
+
+impl DbMapper<UserEntity, User> for LoginDbMapper {
+    fn to_db(entity: UserEntity) -> User {
+        User {
+            id: Uuid::new_v4(),
+            email: entity.email,
+            password: entity.password,
+            created_at: chrono::Local::now().naive_local(),
+            updated_at: chrono::Local::now().naive_local(),
+        }
+    }
+
+    fn to_entity(model: User) -> UserEntity {
+        UserEntity {
+            email: model.email,
+            password: model.password,
+        }
+    }
+}

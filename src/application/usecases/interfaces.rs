@@ -16,3 +16,8 @@ pub trait AbstractInvitationUseCase<T> {
 pub trait AbstractRegisterCompleteUseCase<T> {
     async fn register(&self) -> Result<T, AppError>;
 }
+
+#[async_trait(?Send)]
+pub trait AbstractLoginUseCase {
+    async fn login(&self) -> Result<(), AppError>;
+}

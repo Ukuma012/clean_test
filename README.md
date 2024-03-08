@@ -32,9 +32,10 @@
 - uuid や chrono を使わないと、invitations の entity を表現できないけれど、外部のパッケージに依存することになる？
   他にやり方を思いつかないので、practical にやっていく
 - infrastructure 層と adapter 層が分離されていない。adapter 層が実質 infrastructure 層を担っている。infrastructure 層が意味をなしていない。
-- Error コードとカスタムエラーコードの関係について
 
 # TODO
+
+- カスタムエラーの取り扱いについて考える
 
 # 発見
 

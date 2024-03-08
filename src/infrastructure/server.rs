@@ -5,7 +5,7 @@ use crate::adapters::{
     api::shared::app_state::AppState,
     spi::{
         db::{
-            db_connection::DbConnection, db_dog_facts_repository::DogFactsRepository, db_invitation_repository::InvitationRepository,
+            db_connection::DbConnection, db_dog_facts_repository::DogFactsRepository, db_invitation_repository::InvitationRepository, db_login_repository::LoginRepository,
             db_register_complete_repository::RegisterCompleteRepository,
         },
         email::email_repository::MailTrapRepository,
@@ -37,6 +37,9 @@ pub async fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::
             db_connection: db_connection.clone(),
         },
         email_repository: MailTrapRepository {},
+        login_repository: LoginRepository {
+            db_connection: db_connection.clone(),
+        },
     });
 
     let port = listner.local_addr().unwrap().port();
