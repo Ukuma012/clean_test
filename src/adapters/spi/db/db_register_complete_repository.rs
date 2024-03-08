@@ -30,9 +30,4 @@ impl RegisterCompleteRepositoryAbstract for RegisterCompleteRepository {
 
         Ok(RegisterCompleteDbMapper::to_entity(result))
     }
-
-    async fn generate_session_id(&self, user: UserEntity) -> Result<UserEntity, AppError> {
-        unimplemented!()
-        // let session_id = Uuid::new_v4();
-    }
 }
