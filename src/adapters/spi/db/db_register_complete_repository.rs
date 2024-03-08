@@ -1,6 +1,5 @@
 use async_trait::async_trait;
 use diesel::prelude::*;
-use uuid::Uuid;
 
 use crate::application::mappers::db_mapper::DbMapper;
 use crate::application::repositories::register_complete_repository_abstract::RegisterCompleteRepositoryAbstract;

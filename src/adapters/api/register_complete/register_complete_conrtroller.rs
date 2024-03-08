@@ -3,7 +3,7 @@ use actix_web::{post, web, HttpResponse};
 
 use crate::adapters::api::register_complete::register_complete_payloads::RegisterCompleteUser;
 use crate::adapters::api::shared::app_state::AppState;
-use crate::adapters::api::shared::session::{self, generate_session_id, set_session_id};
+use crate::adapters::api::shared::session::{generate_session_id, set_session_id};
 use crate::application::usecases::interfaces::AbstractRegisterCompleteUseCase;
 use crate::application::usecases::register_complete_usecase::RegisterCompleteUseCase;
 use crate::error_response::ApiResponse;

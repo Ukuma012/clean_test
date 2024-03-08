@@ -1,13 +1,10 @@
-use crate::{adapters::api::shared::session::validate_session, error::AppError};
-use actix_session::Session;
-use actix_web::{get, web, HttpResponse};
+use actix_web::{get, web, HttpResponse, Responder};
 
 pub fn routes(cfg: &mut web::ServiceConfig) {
     cfg.service(healthcheck);
 }
 
 #[get("")]
-async fn healthcheck(session: Session) -> Result<HttpResponse, AppError> {
-    session.insert("test", "hi");
-    Ok(HttpResponse::Ok().body("Ok\n"))
+async fn healthcheck() -> impl Responder {
+    HttpResponse::Ok().body("Ok\n")
 }
