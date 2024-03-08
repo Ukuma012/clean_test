@@ -1,18 +1,14 @@
-use actix_redis::RedisSession;
-use actix_session::CookieSession;
-use rand::prelude::*;
-use rand_chacha::ChaCha20Rng;
-use std::sync::Arc;
+use actix_session::storage::RedisSessionStore;
 
 pub struct RedisConnection {}
 
 impl RedisConnection {
-    pub fn new() -> Arc<RedisSession> {
+    pub async fn new() -> Result<RedisSessionStore, std::io::Error> {
         let redis_url = dotenvy::var("REDIS_URL").expect("REDIS_URL must be set");
-        let mut csp_rng = ChaCha20Rng::from_entropy();
-        let mut redis_data = [0u8; 32];
-        csp_rng.fill_bytes(&mut redis_data);
 
-        Arc::new(RedisSession::new(&redis_url, &redis_data))
+        match RedisSessionStore::new(redis_url).await {
+            Ok(redis_store) => Ok(redis_store),
+            Err(err) => Err(std::io::Error::new(std::io::ErrorKind::Other, format!("Failed to connect Redis: {}", err))),
+        }
     }
 }

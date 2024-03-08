@@ -13,11 +13,11 @@ use crate::adapters::{
     },
 };
 
-use actix_session::CookieSession;
+use actix_session::SessionMiddleware;
+use actix_web::{cookie::Key, web, App, HttpServer};
 use actix_web::{dev::Server, middleware::Logger};
-use actix_web::{web, App, HttpServer};
 
-pub fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Error> {
+pub async fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Error> {
     env::set_var("RUST_BACKTRACE", "1");
     env::set_var("RUST_LOG", "actix_web=debug,actix_redis=info");
 
@@ -40,13 +40,15 @@ pub fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Er
     });
 
     let port = listner.local_addr().unwrap().port();
-    let session = RedisConnection::new();
+
+    let session = RedisConnection::new().await?;
+    let secret_key = Key::generate();
 
     let server = HttpServer::new(move || {
         App::new()
             .app_data(data.clone())
             .wrap(Logger::default())
-            .wrap(CookieSession::signed(&[0; 32]).secure(false))
+            .wrap(SessionMiddleware::new(session.clone(), secret_key.clone()))
             .configure(adapters::api::shared::routes::routes)
     })
     .listen(listner)?

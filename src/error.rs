@@ -1,9 +1,12 @@
-use actix_web::{error::ResponseError, http::StatusCode, Error, HttpResponse};
+use actix_session::{SessionGetError, SessionInsertError};
+use actix_web::{error::ResponseError, http::StatusCode, HttpResponse};
+use anyhow::Error as AnyhowError;
 use argon2::password_hash::Error as PasswordHashError;
 use diesel::r2d2::{Error as R2D2Error, PoolError};
 use diesel::result::{DatabaseErrorKind, Error as DieselError};
 use serde_json::json;
 use serde_json::Value as JsonValue;
+use std::io::Error as IoError;
 use thiserror::Error;
 use uuid::Error as UuidError;
 
@@ -99,8 +102,26 @@ impl From<PasswordHashError> for AppError {
     }
 }
 
-impl From<Error> for AppError {
-    fn from(_err: Error) -> Self {
+impl From<SessionGetError> for AppError {
+    fn from(_err: SessionGetError) -> Self {
+        AppError::UnprocessableEntity(json!({"error": "SessionGetError."}))
+    }
+}
+
+impl From<SessionInsertError> for AppError {
+    fn from(_err: SessionInsertError) -> Self {
+        AppError::UnprocessableEntity(json!({"error": "SessionInsertError"}))
+    }
+}
+
+impl From<AnyhowError> for AppError {
+    fn from(_error: AnyhowError) -> Self {
+        AppError::InternalServerError
+    }
+}
+
+impl From<IoError> for AppError {
+    fn from(_e: IoError) -> Self {
         AppError::InternalServerError
     }
 }

@@ -14,6 +14,6 @@ extern crate log;
 extern crate diesel;
 extern crate r2d2;
 
-pub fn run(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Error> {
-    infrastructure::server::server(listner, db_name)
+pub async fn run(listner: TcpListener, db_name: &str) -> Result<Server, std::io::Error> {
+    infrastructure::server::server(listner, db_name).await
 }

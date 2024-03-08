@@ -8,6 +8,6 @@ pub fn routes(cfg: &mut web::ServiceConfig) {
 
 #[get("")]
 async fn healthcheck(session: Session) -> Result<HttpResponse, AppError> {
-    validate_session(&session)?;
+    session.insert("test", "hi");
     Ok(HttpResponse::Ok().body("Ok\n"))
 }

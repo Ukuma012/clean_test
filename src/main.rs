@@ -19,5 +19,5 @@ async fn main() -> std::io::Result<()> {
     let listener = TcpListener::bind(constants::BIND).expect("Failed to bind given port");
     let database_name = env::var("DATABASE_NAME").expect("DATABASE_NAME must be set");
 
-    run(listener, &database_name)?.await
+    run(listener, &database_name).await?.await
 }
