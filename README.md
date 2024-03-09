@@ -2,7 +2,7 @@
 
 ## healthcheck
 
-- curl -X GET http://localhost:8787/api/v1/healthcheck/
+- curl -v http://localhost:8787/api/v1/healthcheck
 
 - curl -v -X POST http://localhost:8787/api/v1/healthcheck/login
 
@@ -40,6 +40,8 @@
   - json で送るのか
   - フロント、バックどちらが cookie に入れるのか。
   - session_id を key にして、何を value にするのか。
+- main, infrastructure/server が複雑なので、もっと簡単にできる
+- workspace について check
 
 # 発見
 

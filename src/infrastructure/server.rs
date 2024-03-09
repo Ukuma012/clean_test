@@ -9,11 +9,10 @@ use crate::adapters::{
             db_register_complete_repository::RegisterCompleteRepository,
         },
         email::email_repository::MailTrapRepository,
-        redis::redis_connection::RedisConnection,
     },
 };
 
-use actix_session::SessionMiddleware;
+use actix_session::{storage::RedisActorSessionStore, SessionMiddleware};
 use actix_web::{cookie::Key, web, App, HttpServer};
 use actix_web::{dev::Server, middleware::Logger};
 
@@ -44,14 +43,15 @@ pub async fn server(listner: TcpListener, db_name: &str) -> Result<Server, std::
 
     let port = listner.local_addr().unwrap().port();
 
-    let session = RedisConnection::new().await?;
+    let redis_url = dotenvy::var("REDIS_URL").expect("REDIS_URL must be set");
     let secret_key = Key::generate();
 
     let server = HttpServer::new(move || {
         App::new()
             .app_data(data.clone())
+            .wrap(SessionMiddleware::new(RedisActorSessionStore::new(redis_url.clone()), secret_key.clone()))
+            // enable logger - always register Actix web Logger middleware last
             .wrap(Logger::default())
-            .wrap(SessionMiddleware::new(session.clone(), secret_key.clone()))
             .configure(adapters::api::shared::routes::routes)
     })
     .listen(listner)?

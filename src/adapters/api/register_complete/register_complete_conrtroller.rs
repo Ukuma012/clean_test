@@ -17,7 +17,7 @@ async fn register_complete(data: web::Data<AppState>, invitation_token: web::Pat
     let register_complete_usecase = RegisterCompleteUseCase::new(&form.email, &form.password, &invitation_token, &data.invitation_repository, &data.register_complete_repository);
     let user = register_complete_usecase.register().await?;
 
-    let new_session_id = generate_session_id()?;
+    let new_session_id = generate_session_id();
     set_session_id(&session, &new_session_id)?;
     println!("{}", new_session_id);
     Ok(HttpResponse::Ok().json(user))
