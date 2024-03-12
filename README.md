@@ -46,3 +46,4 @@
 # 発見
 
 - この実装では、外部(db, http, email service)とのやりとりは adapters の api と spi で行なっている
+- サーバーが再起動すると、cookie が無効になる

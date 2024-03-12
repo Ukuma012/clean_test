@@ -2,12 +2,13 @@ use crate::error::AppError;
 use actix_session::Session;
 use uuid::Uuid;
 
-pub fn validate_session(session: &Session) -> Result<(), AppError> {
-    if session.get::<Uuid>("session_id")?.is_none() {
-        return Err(AppError::Unauthorized("Inavlid session".into()));
-    } else {
-        Ok(())
-    }
+pub fn validate_session(session: Session) -> Result<(), AppError> {
+    let text: Option<String> = session.get("testing")?;
+    println!("{:?}", text);
+
+    let user_text: Option<String> = session.get("user_id")?;
+    println!("{:?}", user_text);
+    Ok(())
 }
 
 pub fn generate_session_id() -> String {
@@ -16,5 +17,6 @@ pub fn generate_session_id() -> String {
 
 pub fn set_session_id(session: &Session, session_id: &str) -> Result<(), AppError> {
     session.insert("session_id", "hi")?;
+    session.insert("testing", "can you see me?")?;
     Ok(())
 }
