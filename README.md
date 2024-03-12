@@ -36,12 +36,9 @@
 # TODO
 
 - カスタムエラーの取り扱いについて考える
-- session_id の取り扱いについて。
-  - json で送るのか
-  - フロント、バックどちらが cookie に入れるのか。
-  - session_id を key にして、何を value にするのか。
 - main, infrastructure/server が複雑なので、もっと簡単にできる
 - workspace について check
+- user_id を session に格納する。validation の実装
 
 # 発見
 
