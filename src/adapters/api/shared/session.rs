@@ -16,7 +16,5 @@ pub fn generate_session_id() -> String {
 }
 
 pub fn set_session_id(session: &Session, session_id: &str) -> Result<(), AppError> {
-    session.insert("session_id", "hi")?;
-    session.insert("testing", "can you see me?")?;
     Ok(())
 }

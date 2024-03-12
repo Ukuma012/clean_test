@@ -17,7 +17,7 @@ impl LoginRepositoryAbstract for LoginRepository {
     async fn retrieval_user(&self, user_email: String, naive_password: String) -> Result<(), AppError> {
         let conn = self.db_connection.get_pool().get()?;
         let user: User = users.filter(email.eq(user_email)).get_result::<User>(&conn)?;
-        let _password_verify = verify_password_hash(naive_password, user.password)?;
+        verify_password_hash(naive_password, user.password)?;
 
         Ok(())
     }
