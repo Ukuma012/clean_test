@@ -1,14 +1,11 @@
 use async_trait::async_trait;
 use diesel::prelude::*;
 
-use crate::application::mappers::db_mapper::DbMapper;
 use crate::application::repositories::login_repository_abstract::LoginRepositoryAbstract;
 
 use crate::adapters::spi::db::db_connection::DbConnection;
-use crate::adapters::spi::db::db_mappers::LoginDbMapper;
 use crate::adapters::spi::db::{models::User, schema::users::dsl::*};
 use crate::adapters::spi::shared::hasher::verify_password_hash;
-use crate::domain::user_entity::UserEntity;
 use crate::error::AppError;
 
 pub struct LoginRepository {
